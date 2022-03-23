@@ -14,8 +14,11 @@ public class Manager {
         this.epicByID = new HashMap<>();
     }
 
-    void generateID(Task task) {
+     void generateID(Task task) {
         task.setId(id++);
+    }
+    void addTask(String name) {
+        tasksByID.put(generateID(), name);
     }
 
     void getAllTasks() {

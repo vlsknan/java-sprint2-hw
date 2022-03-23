@@ -1,5 +1,10 @@
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Пришло время практики!");
+
+        Manager manager = new Manager();
+        Task task = new Task();
+        Task epic = new Epic();
+        Task subtask = new Subtask();
+
     }
 }

@@ -3,11 +3,13 @@ import java.util.HashMap;
 
 public class Manager {
     private int id;
+    private String NEW = "NEW";
+    private String IN_PROGRESS = "IN_PROGRESS";
+    private String DONE = "DONE";
 
     HashMap<Integer, Task> tasksByID;
     HashMap<Integer, Epic> epicByID;
     HashMap<Integer, Subtask> subtasksByID;
-
 
     public Manager() {
         id = 1;
@@ -83,11 +85,11 @@ public class Manager {
         }
     }
 
-    void update(Epic epic) {
-        for (Subtask subtaskStatus : epic.getSubtasks()) {
-            if (subtaskStatus == null || subtaskStatus == "NEW") {
+    /void update(Epic epic) {
+        for (String subtaskStatus : epic.getStatus()) {
+            if (subtaskStatus == null || subtaskStatus == NEW) {
                 epic.setStatus("NEW");
-            } else if (subtaskStatus == "IN_PROGRESS") {
+            } else if (subtaskStatus == IN_PROGRESS) {
                 epic.setStatus("IN_PROGRESS");
             } else {
                 epic.setStatus("DONE");
@@ -99,8 +101,9 @@ public class Manager {
             return;
         }
     }
-
+*/
     void update(Subtask subtask) {
+
         if (tasksByID.containsKey(subtask.getID())) {
             tasksByID.put(subtask.getID(), subtask);
         } else {
@@ -121,7 +124,9 @@ public class Manager {
         subtasksByID.remove(id);
     }
 
-    ArrayList<String> getListAllSubtaskEpic (Epic epic) {
-        return new ArrayList<>(subtasksByID.get(epic));
+    ArrayList<Subtask> getListAllSubtaskEpic (Epic epic) {
+        ArrayList<Subtask> allSubtask = new ArrayList<>();
+        allSubtask.add(subtasksByID.get(epic));
+        return allSubtask;
     }
 }

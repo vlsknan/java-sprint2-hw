@@ -3,9 +3,15 @@ import java.util.ArrayList;
 public class Epic extends Task {
     private ArrayList<Subtask> subtasks;
 
-    public Epic(String taskName, int id, String descriptionTask, String status, ArrayList<Subtask> subtasks) {
+    public Epic(String taskName, int id, String descriptionTask, String status) {
         super(taskName, id, descriptionTask, status);
-        this.subtasks = subtasks;
+    }
+
+    public void putSubtask(Subtask subtask) {
+        if (subtasks == null) {
+            subtasks = new ArrayList<>();
+        }
+        subtasks.add(subtask);
     }
 
     public ArrayList<Subtask> getSubtasks() {

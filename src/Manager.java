@@ -1,12 +1,16 @@
+package ru.yandex.manager;
+
+import ru.yandex.model.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Manager {
     private int id;
 
-    HashMap<Integer, Task> tasksByID;
-    HashMap<Integer, Epic> epicByID;
-    HashMap<Integer, Subtask> subtasksByID;
+    private HashMap<Integer, Task> tasksByID;
+    private HashMap<Integer, Epic> epicByID;
+    private HashMap<Integer, Subtask> subtasksByID;
 
 
     public Manager() {
@@ -17,65 +21,65 @@ public class Manager {
     }
 
     //получить все задачи
-    ArrayList<Task> getAllTasks() {
+    public ArrayList<Task> getAllTasks() {
         return new ArrayList<>(tasksByID.values());
     }
 
-    ArrayList<Epic> getAllEpic() {
+    public ArrayList<Epic> getAllEpic() {
         return new ArrayList<>(epicByID.values());
     }
 
-    ArrayList<Subtask> getAllSubtasks() {
+    public ArrayList<Subtask> getAllSubtasks() {
         return new ArrayList<>(subtasksByID.values());
     }
 
     //удалить все задачи
-    void deleteAllTasks() {
+    public void deleteAllTasks() {
         tasksByID.clear();
     }
 
-    void deleteAllEpic() {
+    public void deleteAllEpic() {
             epicByID.clear();
     }
 
-    void deleteAllSubtasks() {
+    public void deleteAllSubtasks() {
         subtasksByID.clear();
     }
 
     //получить задачу по номеру
-    Task getTaskByID(int id) {
+    public Task getTaskByID(int id) {
         return tasksByID.get(id);
     }
 
-    Epic getEpicByID(int id) {
+    public Epic getEpicByID(int id) {
         return epicByID.get(id);
     }
 
-    Subtask getSubtaskByID(int id) {
+    public Subtask getSubtaskByID(int id) {
         return subtasksByID.get(id);
     }
 
     //создание
-    Task createTask (Task task) {
+    public Task createTask(Task task) {
         task.setId(id++);
         tasksByID.put(task.getID(), task);
         return task;
     }
 
-    Epic createEpic(Epic epic) {
+    public Epic createEpic(Epic epic) {
         epic.setId(id++);
         epicByID.put(epic.getID(), epic);
         return epic;
     }
 
-    Subtask createSubtask(Subtask subtask) {
+    public Subtask createSubtask(Subtask subtask) {
         subtask.setId(id++);
         subtasksByID.put(subtask.getID(), subtask);
         return subtask;
     }
 
     //обновление
-    void updateTask(Task task) {
+    public void updateTask(Task task) {
         if (tasksByID.containsKey(task.getID())) {
             tasksByID.put(task.getID(), task);
         } else {
@@ -83,26 +87,23 @@ public class Manager {
         }
     }
 
-    void updateEpic(Epic epic) {
+    public void updateEpic(Epic epic) {
         if (epicByID.containsKey(epic.getID())) {
             int countNew = 0;
-            int countProgress = 0;
             int countDone = 0;
             for (Subtask subtaskStatus : epic.getSubtasks()) {
-                if (subtaskStatus == null || subtaskStatus.getStatus().equals("NEW")) {
+                if (subtaskStatus == null || subtaskStatus.getStatus() == Status.NEW) {
                 countNew++;
-                } else if (subtaskStatus.getStatus().equals("IN_PROGRESS")) {
-                countProgress++;
                 } else {
                 countDone++;
                 }
             }
             if (countDone == epic.getSubtasks().size()) {
-                epic.setStatus("DONE");
+                epic.setStatus(Status.DONE);
             } else if (countNew == epic.getSubtasks().size()) {
-                epic.setStatus("NEW");
+                epic.setStatus(Status.NEW);
             } else {
-                epic.setStatus("IN_PROGRESS");
+                epic.setStatus(Status.IN_PROGRESS);
             }
             epicByID.put(epic.getID(), epic);
         } else {
@@ -110,7 +111,7 @@ public class Manager {
         }
     }
 
-    void updateSubtask(Subtask subtask) {
+    public void updateSubtask(Subtask subtask) {
         if (tasksByID.containsKey(subtask.getID())) {
             tasksByID.put(subtask.getID(), subtask);
         } else {
@@ -119,19 +120,19 @@ public class Manager {
     }
 
     //удалить по номеру
-    void deleteTaskByID(int id) {
+    public void deleteTaskByID(int id) {
         tasksByID.remove(id);
     }
 
-    void deleteEpicByID(String nameEpic) {
+    public void deleteEpicByID(String nameEpic) {
         epicByID.remove(nameEpic);
     }
 
-    void deleteSubtaskByID(int id) {
+    public void deleteSubtaskByID(int id) {
         subtasksByID.remove(id);
     }
 
-    ArrayList<Subtask> getListAllSubtaskEpic (Epic epic) {
+    public ArrayList<Subtask> getListAllSubtaskEpic (Epic epic) {
         return new ArrayList<>(epic.getSubtasks());
     }
 }

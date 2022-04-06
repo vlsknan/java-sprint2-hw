@@ -1,11 +1,11 @@
-import ru.yandex.model.Task;
+package ru.yandex.model;
 
 import java.util.ArrayList;
 
 public class Epic extends Task {
     private ArrayList<Subtask> subtasks;
 
-    public Epic(String taskName, int id, String descriptionTask, String status) {
+    public Epic(String taskName, int id, String descriptionTask, Status status) {
         super(taskName, id, descriptionTask, status);
     }
 

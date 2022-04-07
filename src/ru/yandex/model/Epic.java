@@ -23,4 +23,14 @@ public class Epic extends Task {
     public void setSubtasks(ArrayList<Subtask> subtasks) {
         this.subtasks = subtasks;
     }
+
+    @Override
+    public String toString() {
+        return "Epic{" +
+                "epicName='" + getTaskName() + '\'' +
+                ", id=" + getID() +
+                ", descriptionTask='" + getDescriptionTask() + '\'' +
+                ", status=" + getStatus() +
+                '}';
+    }
 }

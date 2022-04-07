@@ -1,15 +1,11 @@
 package ru.yandex.manager;
 
-import ru.yandex.model.Epic;
-import ru.yandex.model.Subtask;
-import ru.yandex.model.Task;
+import ru.yandex.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public interface TaskManager {
-    static final int MAX_SIZE_HISTORY = 10;
-
     ArrayList<Task> getAllTasks();
     ArrayList<Epic> getAllEpic();
     ArrayList<Subtask> getAllSubtasks();

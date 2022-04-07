@@ -12,15 +12,13 @@ public class InMemoryTaskManager implements TaskManager {
     private HashMap<Integer, Task> tasksByID;
     private HashMap<Integer, Epic> epicByID;
     private HashMap<Integer, Subtask> subtasksByID;
-    //private  List<Task> history;
-    private TaskManager historyManager;
+    private HistoryManager historyManager;
 
     public InMemoryTaskManager() {
         id = 1;
         this.tasksByID = new HashMap<>();
         this.subtasksByID = new HashMap<>();
         this.epicByID = new HashMap<>();
-        //this.history = new ArrayList<>();
         this.historyManager = Managers.getDefaultHistory();
     }
 
@@ -48,7 +46,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void deleteAllEpic() {
-            epicByID.clear();
+        epicByID.clear();
     }
 
     @Override
@@ -59,29 +57,23 @@ public class InMemoryTaskManager implements TaskManager {
     //получить задачу по номеру
     @Override
     public Task getTaskByID(int id) {
-        return tasksByID.get(id);
+        Task task = tasksByID.get(id);
+        historyManager.add(task);
+        return task;
     }
 
     @Override
     public Epic getEpicByID(int id) {
-        if (MAX_SIZE_HISTORY < historyManager.getHistory()) {
-            history.remove(0);
-            history.add();
-        } else {
-            history.add(getTaskByID(id));
-        }
-        return epicByID.get(id);
+        Epic epic = epicByID.get(id);
+        historyManager.add(epic);
+        return epic;
     }
 
     @Override
     public Subtask getSubtaskByID(int id) {
-        if (history.size() > MAX_SIZE_HISTORY) {
-            history.remove(0);
-            history.add(getSubtaskByID(id));
-        } else {
-            history.add(getTaskByID(id));
-        }
-        return subtasksByID.get(id);
+        Subtask subtask = subtasksByID.get(id);
+        historyManager.add(subtask);
+        return subtask;
     }
 
     //создание
@@ -123,9 +115,9 @@ public class InMemoryTaskManager implements TaskManager {
             int countDone = 0;
             for (Subtask subtaskStatus : epic.getSubtasks()) {
                 if (subtaskStatus == null || subtaskStatus.getStatus() == Status.NEW) {
-                countNew++;
+                    countNew++;
                 } else {
-                countDone++;
+                    countDone++;
                 }
             }
             if (countDone == epic.getSubtasks().size()) {

@@ -5,7 +5,7 @@ import ru.yandex.model.Task;
 import java.util.*;
 
 public class InMemoryHistoryManager implements HistoryManager {
-    private Map<Integer, Node> nodeMap = new HashMap<>();
+    private final Map<Integer, Node> nodeMap = new HashMap<>();
     private Node first;
     private Node last;
 
@@ -48,8 +48,8 @@ public class InMemoryHistoryManager implements HistoryManager {
                 remove(task.getID());
             }
                 last.next = newNode;
-                last = newNode;
         }
+        last = newNode;
         nodeMap.put(task.getID(), newNode);
     }
 
@@ -59,9 +59,8 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (node == first) {
             first = first.next;
             first.prev = null;
-            return;
-        }
-        if (node != first && node != last) {
+           return;
+        } else {
             nodePrev.next = nodeNext;
             nodeNext.prev = nodePrev;
             node.prev = null;
@@ -70,7 +69,6 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (node == last) {
             last = last.prev;
             last.prev = null;
-            return;
         }
     }
 

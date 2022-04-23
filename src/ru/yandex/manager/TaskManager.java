@@ -27,7 +27,7 @@ public interface TaskManager {
     void updateSubtask(Subtask subtask);
 
     void deleteTaskByID(int id);
-    void deleteEpicByID(String nameEpic);
+    void deleteEpicByID(int id);
     void deleteSubtaskByID(int id);
 
     ArrayList<Subtask> getListAllSubtaskEpic (Epic epic);

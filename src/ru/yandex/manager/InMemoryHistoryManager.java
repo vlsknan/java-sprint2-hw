@@ -42,7 +42,6 @@ public class InMemoryHistoryManager implements HistoryManager {
         Node newNode = new Node(task, last, null);
         if (first == null) {
             first = newNode;
-            last = first;
         } else {
             if (nodeMap.containsKey(task.getID())) {
                 remove(task.getID());
@@ -60,7 +59,8 @@ public class InMemoryHistoryManager implements HistoryManager {
             first = first.next;
             first.prev = null;
            return;
-        } else {
+        }
+        if (node != last) {
             nodePrev.next = nodeNext;
             nodeNext.prev = nodePrev;
             node.prev = null;

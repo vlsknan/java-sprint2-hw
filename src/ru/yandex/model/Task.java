@@ -7,12 +7,14 @@ public class Task {
     private int id; //идентификатор
     private String descriptionTask; //описание
     private Status status;// статус задачи
+    private TypeTask type;
 
-    public Task(String taskName, int id, String descriptionTask, Status status) {
+    public Task(String taskName, int id, String descriptionTask, Status status, TypeTask type) {
         this.taskName = taskName;
         this.id = id;
         this.descriptionTask = descriptionTask;
         this.status = status;
+        this.type = type;
     }
 
     public Status getStatus() {
@@ -45,6 +47,10 @@ public class Task {
 
     public void setDescriptionTask(String descriptionTask) {
         this.descriptionTask = descriptionTask;
+    }
+
+    public TypeTask getType() {
+        return type;
     }
 
     @Override

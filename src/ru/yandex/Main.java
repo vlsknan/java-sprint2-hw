@@ -7,28 +7,28 @@ import ru.yandex.model.*;
 public class Main {
         public static void main(String[] args) {
 
-                TaskManager manager = Managers.getDefault();
+                TaskManager manager = Managers.getDefault("resources/task.csv");
 
-                Task task1 = new Task("Задача 1", 0, "Собрать вещи для переезда", Status.NEW);
+                Task task1 = new Task("Задача 1", 0, "Собрать вещи для переезда", Status.NEW, TypeTask.TASK);
                 manager.createTask(task1);
-                Task task2 = new Task("Задача 2", 0, "-", Status.IN_PROGRESS);
+                Task task2 = new Task("Задача 2", 0, "-", Status.IN_PROGRESS, TypeTask.TASK);
                 manager.createTask(task2);
                 System.out.println("History: " + manager.getHistory());
 
-                Epic epic1 = new Epic("Эпик 1", 0, "Выучить все экзамены", Status.NO);
+                Epic epic1 = new Epic("Эпик 1", 0, "Выучить все экзамены", Status.NO, TypeTask.EPIC);
                 manager.createEpic(epic1);
 
                 Subtask subtaskForEpic1_1 = new Subtask("Мат анализ", 0, "-", Status.NEW,
-                        epic1.getID());
+                        epic1.getID(), TypeTask.SUBTASK);
                 Subtask subtaskForEpic1_2 = new Subtask("Философия", 0, "Осталось выучить 3 билета",
-                        Status.IN_PROGRESS, epic1.getID());
+                        Status.IN_PROGRESS, epic1.getID(), TypeTask.SUBTASK);
                 Subtask subtaskForEpic1_3 = new Subtask("Помыть полы", 0, "пусть будет чисто",
-                        Status.DONE, epic1.getID());
+                        Status.DONE, epic1.getID(), TypeTask.SUBTASK);
                 manager.createSubtask(subtaskForEpic1_1);
                 manager.createSubtask(subtaskForEpic1_2);
                 manager.createSubtask(subtaskForEpic1_3);
 
-                Epic epic2 = new Epic("Эпик 2", 0, "-", Status.NO);
+                Epic epic2 = new Epic("Эпик 2", 0, "-", Status.NO, TypeTask.EPIC);
                 manager.createEpic(epic2);
 
                 manager.getTaskByID(task2.getID());

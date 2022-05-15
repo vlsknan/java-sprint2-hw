@@ -31,7 +31,6 @@ public class Main {
             manager.getEpicByID(epic2.getID());
 
             TaskManager manager2 = FileBackedTasksManager.loadFromFile("resources/task.csv");
-
             System.out.println(manager2.getAllTasks());
             System.out.println(manager2.getAllEpic());
             System.out.println(manager2.getAllSubtasks());

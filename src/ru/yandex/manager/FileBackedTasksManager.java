@@ -20,27 +20,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     @Override
-    public ArrayList<Task> getAllTasks() {
-        ArrayList<Task> task = super.getAllTasks();
-        save();
-        return task;
-    }
-
-    @Override
-    public ArrayList<Epic> getAllEpic() {
-        ArrayList<Epic> epic = super.getAllEpic();
-        save();
-        return epic;
-    }
-
-    @Override
-    public ArrayList<Subtask> getAllSubtasks() {
-        ArrayList<Subtask> subtask = super.getAllSubtasks();
-        save();
-        return subtask;
-    }
-
-    @Override
     public void deleteAllTasks() {
         super.deleteAllTasks();
         save();
@@ -122,13 +101,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         return subtask;
     }
 
-    @Override
-    public List<Task> getHistory() {
-        List<Task> history = super.getHistory();
-        save();
-        return history;
-    }
-
     private void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(valueOf(file)))) {
             writer.append("id,type,name,status,description,epic");
@@ -186,12 +158,22 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                     break;
                 }
             }
-            br.readLine();
             String line = br.readLine();
             if (line != null) {
                 List<Integer> history = historyFromString(line);
                 for (Integer id : history) {
-                manager.historyManager.add(manager.tasksByID.get(id));
+                    for (Integer idT : manager.tasksByID.keySet()) {
+                        if (id == idT)
+                            manager.historyManager.add(manager.tasksByID.get(id));
+                    }
+                    for (Integer idE : manager.epicByID.keySet()){
+                        if (id == idE)
+                            manager.historyManager.add(manager.epicByID.get(id));
+                    }
+                        for (Integer idS : manager.subtasksByID.keySet()){
+                            if (id == idS)
+                                manager.historyManager.add(manager.subtasksByID.get(id));
+                        }
                 }
             }
         } catch (IOException exp) {

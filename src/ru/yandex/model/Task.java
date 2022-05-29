@@ -1,5 +1,7 @@
 package ru.yandex.model;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Task {
@@ -7,14 +9,20 @@ public class Task {
     private int id; //идентификатор
     private String descriptionTask; //описание
     private Status status;// статус задачи
-    private TypeTask type;
+    private TypeTask type; // тип задачи
+    private int duration; // продолжительность задачи
+    private LocalDateTime startTime; // дата начала задачи
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yy, HH:mm");
 
-    public Task(String taskName, int id, String descriptionTask, Status status, TypeTask type) {
+    public Task(String taskName, int id, String descriptionTask, Status status, TypeTask type,
+                int duration, LocalDateTime startTime) {
         this.taskName = taskName;
         this.id = id;
         this.descriptionTask = descriptionTask;
         this.status = status;
         this.type = type;
+        this.duration = duration;
+        this.startTime = startTime;
     }
 
     public Status getStatus() {
@@ -53,6 +61,28 @@ public class Task {
         return type;
     }
 
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+            return startTime.plusMinutes(duration);
+    }
+
+
+
     @Override
     public String toString() {
         return "Task{" +
@@ -60,6 +90,9 @@ public class Task {
                 ", id=" + id +
                 ", descriptionTask='" + descriptionTask + '\'' +
                 ", status=" + status +
+                ", type=" + type +
+                ", duration=" + duration +
+                ", startTime=" + startTime +
                 '}';
     }
 

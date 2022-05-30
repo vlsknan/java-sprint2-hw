@@ -1,5 +1,9 @@
 package ru.yandex.manager;
 
+import ru.yandex.manager.file.FileBackedTasksManager;
+import ru.yandex.manager.history.HistoryManager;
+import ru.yandex.manager.history.InMemoryHistoryManager;
+
 import java.nio.file.Path;
 
 public class Managers {

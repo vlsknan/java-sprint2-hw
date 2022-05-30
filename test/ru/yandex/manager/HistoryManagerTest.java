@@ -12,12 +12,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HistoryManagerTest {
-    InMemoryHistoryManager historyManager;
-    TaskManager taskManager;
-    public Task task;
-    public Epic epic;
-    public Subtask subtask;
-    DateTimeFormatter format;
+    private InMemoryHistoryManager historyManager;
+    private TaskManager taskManager;
+    private Task task;
+    private Epic epic;
+    private Subtask subtask;
+    private DateTimeFormatter format;
+    private Epic epic1;
 
     @BeforeEach
     void createFirst() {
@@ -34,6 +35,9 @@ class HistoryManagerTest {
                 "Описание подзадачи 1 эпика 1", Status.NEW, epic.getID(),
                 TypeTask.SUBTASK, 70, LocalDateTime.parse("17.06.22, 13:40", format));
         taskManager.createSubtask(subtask);
+        epic1 = new Epic("Эпик 1", 0, "Описание эпика 1",
+                Status.NO, TypeTask.EPIC, 180, LocalDateTime.parse("27.05.22, 17:00", format));
+        taskManager.createEpic(epic1);
     }
 
     @Test
@@ -84,5 +88,4 @@ class HistoryManagerTest {
 
         assertEquals(2, historyManager.getHistory().size());
     }
-
 }

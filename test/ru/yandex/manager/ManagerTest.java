@@ -13,12 +13,11 @@ import java.util.TreeMap;
 import static org.junit.jupiter.api.Assertions.*;
 
  abstract class ManagerTest<T extends TaskManager> {
-    public T manager;
-    public Task task;
-    public Epic epic;
-    public Subtask subtask;
-    public DateTimeFormatter format;
-
+    protected T manager;
+    protected Task task;
+    protected Epic epic;
+    protected Subtask subtask;
+    protected DateTimeFormatter format;
 
     void initialData() {
         format = DateTimeFormatter.ofPattern("dd.MM.yy, HH:mm");

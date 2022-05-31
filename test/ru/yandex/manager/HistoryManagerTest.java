@@ -3,6 +3,8 @@ package ru.yandex.manager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.yandex.manager.history.InMemoryHistoryManager;
+import ru.yandex.manager.memory.InMemoryTaskManager;
 import ru.yandex.model.*;
 
 import java.time.LocalDateTime;

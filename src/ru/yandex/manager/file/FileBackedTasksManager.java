@@ -14,12 +14,15 @@ import java.util.Map;
 
 import static java.lang.String.valueOf;
 
-
 public class FileBackedTasksManager extends InMemoryTaskManager {
     private Path file;
 
     public FileBackedTasksManager(Path path) {
         this.file = Paths.get(valueOf(path));
+    }
+
+    public FileBackedTasksManager() {
+        this.file = Paths.get("task.csv");
     }
 
     @Override
@@ -104,7 +107,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         return subtask;
     }
 
-    private void save() {
+    protected void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(valueOf(file)))) {
             writer.append("id,time,type,name,status,description,epic,duration");
             writer.newLine();
@@ -220,7 +223,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         Status status = Status.valueOf(dataStr[4]);
         String descriptionTask = dataStr[5];
         int duration = Integer.parseInt(dataStr[6]);
-        //DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yy, HH:mm");
         LocalDateTime startTime = LocalDateTime.parse(dataStr[1]);
 
         if (taskType.equals(TypeTask.TASK)) {

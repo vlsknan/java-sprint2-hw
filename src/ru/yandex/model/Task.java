@@ -1,7 +1,6 @@
 package ru.yandex.model;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Task {
@@ -10,9 +9,9 @@ public class Task {
     private String descriptionTask; //описание
     private Status status;// статус задачи
     private TypeTask type; // тип задачи
-    private int duration; // продолжительность задачи
+    transient private int duration; // продолжительность задачи
     private LocalDateTime startTime; // дата начала задачи
-    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yy, HH:mm");
+    // transient DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yy, HH:mm");
 
     public Task(String taskName, int id, String descriptionTask, Status status, TypeTask type,
                 int duration, LocalDateTime startTime) {

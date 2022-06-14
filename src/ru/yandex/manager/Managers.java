@@ -1,15 +1,16 @@
 package ru.yandex.manager;
 
-import ru.yandex.manager.file.FileBackedTasksManager;
 import ru.yandex.manager.history.HistoryManager;
 import ru.yandex.manager.history.InMemoryHistoryManager;
+import ru.yandex.manager.server.HttpTaskManager;
 
-import java.nio.file.Path;
+import java.io.IOException;
 
 public class Managers {
-    public static TaskManager getDefault(String s) {
+    public static TaskManager getDefault() throws IOException {
         //return new InMemoryTaskManager();
-        return new FileBackedTasksManager(Path.of(s));
+        //return new FileBackedTasksManager("resources/task.csv");
+        return new HttpTaskManager("http://localhost:8078");
     }
 
     public static HistoryManager getDefaultHistory() {

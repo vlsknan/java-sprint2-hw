@@ -4,13 +4,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Epic extends Task {
-    private ArrayList<Subtask> subtasks;
-    private int duration;
+    transient private ArrayList<Subtask> subtasks;
 
     public Epic(String taskName, int id, String descriptionTask, Status status,
                 TypeTask type, int duration, LocalDateTime startTime) {
         super(taskName, id, descriptionTask, status, type, duration, startTime);
-        this.duration = duration;
     }
 
     public void putSubtask(Subtask subtask) {
@@ -26,14 +24,6 @@ public class Epic extends Task {
 
     public void setSubtasks(ArrayList<Subtask> subtasks) {
         this.subtasks = subtasks;
-    }
-
-    public void setDurationEpic(int duration) {
-        this.duration = duration;
-    }
-
-    public int getDurationEpic() {
-        return duration;
     }
 
     public LocalDateTime getEndTimeEpic() {

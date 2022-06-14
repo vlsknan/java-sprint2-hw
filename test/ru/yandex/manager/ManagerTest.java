@@ -12,14 +12,14 @@ import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
- abstract class ManagerTest<T extends TaskManager> {
+ public abstract class ManagerTest<T extends TaskManager> {
     protected T manager;
     protected Task task;
     protected Epic epic;
     protected Subtask subtask;
     protected DateTimeFormatter format;
 
-    void initialData() {
+    protected void initialData() {
         format = DateTimeFormatter.ofPattern("dd.MM.yy, HH:mm");
         task = new Task("Задача 1", 0, "Описание задачи 1",
                 Status.NEW, TypeTask.TASK, 30, LocalDateTime.parse("25.05.22, 12:30", format));

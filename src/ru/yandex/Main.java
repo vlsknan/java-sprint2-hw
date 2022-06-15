@@ -40,7 +40,7 @@ public class Main {
 
 
             HttpTaskManager manager2 = new HttpTaskManager();
-            manager2.load();
+            //manager2.load();
             System.out.println(manager2.getAllTasks());
             System.out.println(manager2.getAllEpic());
             System.out.println(manager2.getAllSubtasks());

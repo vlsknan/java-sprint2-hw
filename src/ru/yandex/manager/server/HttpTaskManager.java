@@ -27,9 +27,9 @@ public class HttpTaskManager extends FileBackedTasksManager {
 
     @Override
     protected void save() {
-        client.put("tasks", gson.toJson(new ArrayList<>(tasksByID.values())));
-       client.put("epics", gson.toJson(new ArrayList<>(epicByID.values())));
-       client.put("subtasks", gson.toJson(new ArrayList<>(subtasksByID.values())));
+        client.put("tasks", gson.toJson(tasksByID));
+       client.put("epics", gson.toJson(epicByID));
+       client.put("subtasks", gson.toJson(subtasksByID));
 
        client.put("history", gson.toJson(historyManager.getHistory()));
     }
@@ -38,19 +38,19 @@ public class HttpTaskManager extends FileBackedTasksManager {
         String value;
             // для задач
             value = client.load("tasks");
-            Map<Integer, Task> jsonTasks = gson.fromJson(value, new TypeToken<ArrayList<Task>>() {
+            Map<Integer, Task> jsonTasks = gson.fromJson(value, new TypeToken<HashMap<Integer, Task>>() {
             }.getType());
             tasksByID = jsonTasks;
 
             // для эпиков
             value = client.load("epics");
-            Map<Integer, Epic> jsonEpics = gson.fromJson(value, new TypeToken<ArrayList<Epic>>() {
+            Map<Integer, Epic> jsonEpics = gson.fromJson(value, new TypeToken<HashMap<Integer, Epic>>() {
             }.getType());
             epicByID = jsonEpics;
 
             // для подзадач
             value = client.load("subtasks");
-            Map<Integer, Subtask> jsonSubtasks = gson.fromJson(value, new TypeToken<ArrayList<Subtask>>() {
+            Map<Integer, Subtask> jsonSubtasks = gson.fromJson(value, new TypeToken<HashMap<Integer, Subtask>>() {
             }.getType());
             subtasksByID = jsonSubtasks;
 

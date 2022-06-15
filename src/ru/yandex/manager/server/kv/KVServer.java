@@ -44,9 +44,9 @@ public class KVServer {
 				}
 				String method = h.getRequestMethod();
 				if (method.equals("GET")) {
-					String key = h.getRequestURI().getPath().substring("/load/".length());
+					String key = h.getRequestURI().getPath().substring("/save/".length());
 					if (key.isEmpty()) {
-						response = gson.toJson("Key пустой. key указывается в пути: /load/{key}");
+						response = gson.toJson("Key пустой. key указывается в пути: /save/{key}");
 						h.sendResponseHeaders(403, 0);
 						return;
 					}

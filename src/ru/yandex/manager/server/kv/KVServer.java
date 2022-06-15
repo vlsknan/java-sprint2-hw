@@ -44,14 +44,14 @@ public class KVServer {
 				}
 				String method = h.getRequestMethod();
 				if (method.equals("GET")) {
-					String key = h.getRequestURI().getPath().substring("/save/".length());
+					String key = h.getRequestURI().getPath().substring("/load/".length());
 					if (key.isEmpty()) {
-						response = gson.toJson("Key пустой. key указывается в пути: /save/{key}");
+						response = gson.toJson("Key пустой. key указывается в пути: /load/{key}");
 						h.sendResponseHeaders(403, 0);
 						return;
 					}
 					String value = data.get(key);
-					response = gson.toJson("Значение для ключа " + key + ": " + value);
+					response = gson.toJson(value);
 					h.sendResponseHeaders(200, 0);
 				} else {
 					response = gson.toJson("/load ждёт GET-запрос, а получил: " + method);

@@ -1,12 +1,10 @@
 package ru.yandex.manager.server;
 
-import com.google.gson.Gson;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.yandex.manager.server.kv.KVServer;
-import ru.yandex.manager.server.kv.KVTaskClient;
 import ru.yandex.model.*;
 
 import java.io.IOException;
@@ -45,15 +43,14 @@ import static org.junit.jupiter.api.Assertions.*;
         @Test
         @DisplayName("загрузить с сервера")
         void loadTest() {
-            Gson gson = HttpTaskServer.getGson();
-            Task task = new Task("Задача 1", 0, "Описание задачи 1",
+            Task task = new Task("Задача 1", 1, "Описание задачи 1",
                     Status.NEW, TypeTask.TASK, 30, LocalDateTime.parse("25.05.22, 12:30", format));
-            manager.createTask(task);
-            KVTaskClient client = new KVTaskClient("http://localhost:8078");
-            client.put("tasks", gson.toJson(task));
+            task = manager.createTask(task);
 
-            HttpTaskManager manager2 = new HttpTaskManager();
+            HttpTaskManager manager2 = new HttpTaskManager("http://localhost:8078");
+            manager2.load();
 
+            var t = manager2.getTaskByID(task.getID());
             assertEquals(task, manager2.getTaskByID(task.getID()));
         }
 }

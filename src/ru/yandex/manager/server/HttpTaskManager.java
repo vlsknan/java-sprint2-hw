@@ -9,18 +9,22 @@ import ru.yandex.model.Epic;
 import ru.yandex.model.Subtask;
 import ru.yandex.model.Task;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class HttpTaskManager extends FileBackedTasksManager {
     private final KVTaskClient client;
-    private final Gson gson =  HttpTaskServer.getGson();
+    private final Gson gson = HttpTaskServer.getGson();
     public HistoryManager history;
 
     public HttpTaskManager(String kvServerUrl) {
+        super();
         client = new KVTaskClient(kvServerUrl);
     }
 
     public HttpTaskManager() {
+        super();
         client = new KVTaskClient("http://localhost:8078");
         load();
     }
@@ -28,37 +32,42 @@ public class HttpTaskManager extends FileBackedTasksManager {
     @Override
     protected void save() {
         client.put("tasks", gson.toJson(tasksByID));
-       client.put("epics", gson.toJson(epicByID));
-       client.put("subtasks", gson.toJson(subtasksByID));
-
-       client.put("history", gson.toJson(historyManager.getHistory()));
+        client.put("epics", gson.toJson(epicByID));
+        client.put("subtasks", gson.toJson(subtasksByID));
+        client.put("history", gson.toJson(historyManager.getHistory()));
     }
 
     public void load() {
         String value;
-            // для задач
-            value = client.load("tasks");
-            Map<Integer, Task> jsonTasks = gson.fromJson(value, new TypeToken<HashMap<Integer, Task>>() {
-            }.getType());
-            tasksByID = jsonTasks;
+        // для задач
+        value = client.load("tasks");
+        HashMap<Integer, Task> jsonTasks = gson.fromJson(cleanJSON(value), new TypeToken<HashMap<Integer, Task>>() {
+        }.getType());
+        tasksByID = jsonTasks;
 
-            // для эпиков
-            value = client.load("epics");
-            Map<Integer, Epic> jsonEpics = gson.fromJson(value, new TypeToken<HashMap<Integer, Epic>>() {
-            }.getType());
-            epicByID = jsonEpics;
+        // для эпиков
+        value = client.load("epics");
+        Map<Integer, Epic> jsonEpics = gson.fromJson(cleanJSON(value), new TypeToken<HashMap<Integer, Epic>>() {
+        }.getType());
+        epicByID = jsonEpics;
 
-            // для подзадач
-            value = client.load("subtasks");
-            Map<Integer, Subtask> jsonSubtasks = gson.fromJson(value, new TypeToken<HashMap<Integer, Subtask>>() {
-            }.getType());
-            subtasksByID = jsonSubtasks;
+        // для подзадач
+        value = client.load("subtasks");
+        Map<Integer, Subtask> jsonSubtasks = gson.fromJson(cleanJSON(value), new TypeToken<HashMap<Integer, Subtask>>() {
+        }.getType());
+        subtasksByID = jsonSubtasks;
 
-            // для истории
-            value = client.load("history");
-            HistoryManager jsonHistory = gson.fromJson(value, new TypeToken<HistoryManager>() {
-            }.getType());
-            historyManager = jsonHistory;
+        // для истории
+        value = client.load("history");
+        List<Task> jsonHistory = gson.fromJson(cleanJSON(value), new TypeToken<List<Task>>() {
+        }.getType());
+        jsonHistory.forEach(historyManager::add);
+    }
+
+    private String cleanJSON(String json) {
+        json = json.substring(1, json.length() - 1);
+        json = json.replaceAll("\\\\\"", "\"");
+        return json;
     }
 }
 

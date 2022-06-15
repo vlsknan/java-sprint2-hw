@@ -185,6 +185,8 @@ public class HttpTaskServer {
     public static Gson getGson() {
         GsonBuilder gb = new GsonBuilder();
         gb.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter());
+        gb.serializeNulls();
+        gb.enableComplexMapKeySerialization();
         return gb.create();
     }
 

@@ -29,16 +29,25 @@ public class InMemoryTaskManager implements TaskManager {
     //получить все задачи
     @Override
     public ArrayList<Task> getAllTasks() {
+        if (tasksByID == null) {
+            tasksByID = new HashMap<>();
+        }
         return new ArrayList<>(tasksByID.values());
     }
 
     @Override
     public ArrayList<Epic> getAllEpic() {
+        if (epicByID == null) {
+            epicByID = new HashMap<>();
+        }
         return new ArrayList<>(epicByID.values());
     }
 
     @Override
     public ArrayList<Subtask> getAllSubtasks() {
+        if (subtasksByID == null) {
+            subtasksByID = new HashMap<>();
+        }
         return new ArrayList<>(subtasksByID.values());
     }
 
@@ -63,8 +72,14 @@ public class InMemoryTaskManager implements TaskManager {
     //получить задачу по номеру
     @Override
     public Task getTaskByID(int id) {
+        if (tasksByID == null) {
+            tasksByID = new HashMap<>();
+        }
         if (tasksByID.get(id) != null) {
             Task task = tasksByID.get(id);
+            if (historyManager == null) {
+                historyManager = Managers.getDefaultHistory();
+            }
             historyManager.add(task);
             return task;
         }
@@ -73,6 +88,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Epic getEpicByID(int id) {
+        if (epicByID == null) {
+            epicByID = new HashMap<>();
+        }
         if (epicByID.get(id) != null) {
             Epic epic = epicByID.get(id);
             historyManager.add(epic);
@@ -83,6 +101,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Subtask getSubtaskByID(int id) {
+        if (subtasksByID == null) {
+            subtasksByID = new HashMap<>();
+        }
         if (subtasksByID.get(id) != null) {
             Subtask subtask = subtasksByID.get(id);
             historyManager.add(subtask);
@@ -94,6 +115,9 @@ public class InMemoryTaskManager implements TaskManager {
     //создание
     @Override
     public Task createTask(Task task) {
+        if (tasksByID == null) {
+            tasksByID = new HashMap<>();
+        }
         task.setId(id++);
         tasksByID.put(task.getID(), task);
         prioritizedTasks.put(task.getStartTime(), task);
@@ -105,6 +129,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Epic createEpic(Epic epic) {
+        if (epicByID == null) {
+            epicByID = new HashMap<>();
+        }
         epic.setId(id++);
         epicByID.put(epic.getID(), epic);
         return epic;
@@ -112,6 +139,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Subtask createSubtask(Subtask subtask) {
+        if (subtasksByID == null) {
+            subtasksByID = new HashMap<>();
+        }
         subtask.setId(id++);
         subtasksByID.put(subtask.getID(), subtask);
         prioritizedTasks.put(subtask.getStartTime(), subtask);

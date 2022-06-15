@@ -11,7 +11,6 @@ public class Task {
     private TypeTask type; // тип задачи
     transient private int duration; // продолжительность задачи
     private LocalDateTime startTime; // дата начала задачи
-    // transient DateTimeFormatter format = DateTimeFormatter.ofPattern("dd.MM.yy, HH:mm");
 
     public Task(String taskName, int id, String descriptionTask, Status status, TypeTask type,
                 int duration, LocalDateTime startTime) {

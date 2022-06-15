@@ -130,7 +130,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         }
     }
 
-    private void load() {
+    protected void load() {
         try (BufferedReader reader = new BufferedReader(new FileReader(valueOf(file)))) {
             String line = reader.readLine();
             while (line != null) {

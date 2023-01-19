@@ -2,8 +2,10 @@ package ru.yandex.manager;
 
 import ru.yandex.model.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public interface TaskManager {
     ArrayList<Task> getAllTasks();
@@ -27,9 +29,12 @@ public interface TaskManager {
     void updateSubtask(Subtask subtask);
 
     void deleteTaskByID(int id);
-    void deleteEpicByID(String nameEpic);
+    void deleteEpicByID(int id);
     void deleteSubtaskByID(int id);
 
     ArrayList<Subtask> getListAllSubtaskEpic (Epic epic);
     List<Task> getHistory();
+
+    Map<LocalDateTime, Task> getPrioritizedTasks();
+
 }

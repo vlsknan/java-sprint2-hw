@@ -1,10 +1,13 @@
 package ru.yandex.model;
 
+import java.time.LocalDateTime;
+
 public class Subtask extends Task {
     private int epicID;
 
-    public Subtask(String taskName, int id, String descriptionTask, Status status, int epicID) {
-        super(taskName, id, descriptionTask, status);
+    public Subtask(String taskName, int id, String descriptionTask, Status status, int epicID,
+                   TypeTask type, int duration, LocalDateTime startTime) {
+        super(taskName, id, descriptionTask, status, type, duration, startTime);
         this.epicID = epicID;
     }
 
@@ -23,6 +26,8 @@ public class Subtask extends Task {
                 ", id=" + getID() +
                 ", descriptionTask='" + getDescriptionTask() + '\'' +
                 ", status=" + getStatus() +
+                ", duration=" + getDuration() +
+                ", startTime=" + getStartTime() +
                 '}';
     }
 }
